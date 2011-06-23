@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string
+		name="app_name">Kdroid</string>
+	<string
+		name="jp_mail_addr">メールアドレス</string>
+	<string
+		name="jp_password">パスワード</string>
+	<string
+		name="jp_group">グループ</string>
+	<string
+		name="jp_group_name">グループ名</string>
+	<string
+		name="jp_handle_name">表示名</string>
+	<string
+		name="jp_message">メッセージ</string>
+	<string
+		name="jp_start">開始</string>
+	<string
+		name="jp_loading">通信中…</string>
+	<string
+		name="jp_close">閉じる</string>
+	<string
+		name="jp_next">次へ</string>
+	<string
+		name="jp_no_group">表示するグループがありません</string>
+	<!-- Preference -->
+	<string
+		name="pref_key_id">ID</string>
+	<string
+		name="pref_key_account">ACCOUNT</string>
+	<string
+		name="pref_key_password">PASSWORD</string>
+	<string
+		name="pref_key_terminal_id">TERMINAL_ID</string>
+	<string
+		name="pref_key_group">GROUP</string>
+	<string
+		name="button_ok">OK</string>
+	<string
+		name="button_cancel">キャンセル</string>
+	<!-- err message -->
+	<string
+		name="err_msg_no_input">入力必須項目です</string>
+	<string
+		name="err_msg_mail_addr">アドレスの形式が不正です</string>
+	<!-- dialog message -->
+	<string
+		name="msg_group_new">%sを登録しました</string>
+	<string
+		name="msg_group_exists">%sは既に登録されています。参加しますか？</string>
+</resources>
