@@ -24,15 +24,40 @@ import android.widget.Toast;
  * @author m-shichi
  *
  */
-public class LoginTask extends AsyncTask<Void, Integer, ResponseXML> {
-
+public class LoginTask extends AsyncTask<Void, Integer, ResponseXML>
+{
+	// -----------------------------------
+	// ユーザ情報
+	// -----------------------------------
 	private SelfInfoBean mSelfInfo = null;
+
+	// -----------------------------------
+	// 画面部品
+	// -----------------------------------
 	private Activity mActivity = null;
+
+	// -----------------------------------
+	// 制御変数
+	// -----------------------------------
 	private int mOpType;
 	private int mFirstFlag;
+	private boolean isSuccess = false;
+	private String txtMsg = "";
+
+	// -----------------------------------
+	// 進捗ダイアログ
+	// -----------------------------------
 	private ProgressDialog pDialog;
 
-	public LoginTask(Activity activity, int opType, int firstFlag, SelfInfoBean selfInfo) {
+	/**
+	 *
+	 * @param activity
+	 * @param opType
+	 * @param firstFlag
+	 * @param selfInfo
+	 */
+	public LoginTask(Activity activity, int opType, int firstFlag, SelfInfoBean selfInfo)
+	{
 		this.mActivity = activity;
 		this.mOpType = opType;
 		this.mFirstFlag = firstFlag;
@@ -41,12 +66,14 @@ public class LoginTask extends AsyncTask<Void, Integer, ResponseXML> {
 
 	/*
 	 * (非 Javadoc)
-	 *
 	 * @see android.os.AsyncTask#onPreExecute()
 	 */
 	@Override
-	protected void onPreExecute() {
-		// super.onPreExecute();
+	protected void onPreExecute()
+	{
+		// -----------------------------------
+		// 進捗ダイアログ表示
+		// -----------------------------------
 		pDialog = new ProgressDialog(mActivity);
 		pDialog.setMessage(mActivity.getString(R.string.jp_loading));
 		pDialog.setIndeterminate(true);
@@ -55,47 +82,57 @@ public class LoginTask extends AsyncTask<Void, Integer, ResponseXML> {
 
 	/*
 	 * (非 Javadoc)
-	 *
 	 * @see android.os.AsyncTask#onProgressUpdate(Progress[])
 	 */
 	@Override
-	protected void onProgressUpdate(Integer... values) {
+	protected void onProgressUpdate(Integer... values)
+	{
 		super.onProgressUpdate(values);
 	}
 
 	/*
 	 * (非 Javadoc)
-	 *
 	 * @see android.os.AsyncTask#doInBackground(Params[])
 	 */
 	@Override
-	protected ResponseXML doInBackground(Void... arg0) {
+	protected ResponseXML doInBackground(Void... arg0)
+	{
+		// -----------------------------------
+		// ユーザ情報取得
+		// -----------------------------------
 		HttpUtils httpUtils = new HttpUtils();
 		return httpUtils.requestUserInfo(mOpType, mSelfInfo);
 	}
 
 	/*
 	 * (非 Javadoc)
-	 *
 	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
 	 */
 	@Override
-	protected void onPostExecute(ResponseXML result) {
-		// super.onPostExecute(result);
-
+	protected void onPostExecute(ResponseXML result)
+	{
+		// -----------------------------------
+		// 進捗ダイアログ終了
+		// -----------------------------------
 		pDialog.dismiss();
 
+		// -----------------------------------
+		// ユーザ情報取得
+		// -----------------------------------
 		UserInfo userInfo = result.getData().getUserInfo();
 
+		// -----------------------------------
+		// Preference生成
+		// -----------------------------------
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
 		SharedPreferences.Editor editor = prefs.edit();
 
-		boolean isSuccess = false;
-		String txtMsg = "";
-		switch (Integer.parseInt(result.getCode())) {
+		switch (Integer.parseInt(result.getCode()))
+		{
 			case Constant.CODE_SIGNIN_SUCCESS :
 				txtMsg = "ログイン成功";
 
+				// Preference登録
 				editor.putString(mActivity.getString(R.string.pref_key_id), userInfo.getIdAsString());
 				editor.putString(mActivity.getString(R.string.pref_key_account), userInfo.getMailAddrAsString());
 				editor.putString(mActivity.getString(R.string.pref_key_password), mSelfInfo.getPassword());
@@ -106,16 +143,19 @@ public class LoginTask extends AsyncTask<Void, Integer, ResponseXML> {
 			case Constant.CODE_SIGNIN_FAILED :
 				txtMsg = "ログイン失敗";
 				break;
+
 			case Constant.CODE_SIGNUP_SUCCESS :
 				txtMsg = "ユーザ登録成功";
 
+				// SQLite登録
 				DBHelper db = DBHelper.getInstance(mActivity);
 				db.insertSelfInfo(result, mSelfInfo.getPassword());
 
-				editor.putString(mActivity.getString(R.string.pref_key_id), userInfo.getIdAsString());
-				editor.putString(mActivity.getString(R.string.pref_key_account), userInfo.getMailAddrAsString());
-				editor.putString(mActivity.getString(R.string.pref_key_password), mSelfInfo.getPassword());
-				editor.putString(mActivity.getString(R.string.pref_key_terminal_id), userInfo.getTerminalIdAsString());
+				// Preference登録
+				editor.putString(mActivity.getString(R.string.pref_key_id), userInfo.getIdAsString()); // ユーザID
+				editor.putString(mActivity.getString(R.string.pref_key_account), userInfo.getMailAddrAsString()); // メールアドレス
+				editor.putString(mActivity.getString(R.string.pref_key_password), mSelfInfo.getPassword()); // 暗号化前パスワード
+				editor.putString(mActivity.getString(R.string.pref_key_terminal_id), userInfo.getTerminalIdAsString()); // 端末ID
 
 				isSuccess = true;
 				break;
@@ -125,13 +165,22 @@ public class LoginTask extends AsyncTask<Void, Integer, ResponseXML> {
 		}
 		Toast.makeText(mActivity, txtMsg, Toast.LENGTH_LONG).show();
 
-		if (!isSuccess) {
+		if (!isSuccess)
+		{
 			return;
-		} else {
+		}
+		else
+		{
+			// 次画面設定
 			Intent intent = null;
-			if (mFirstFlag == 1) {
+			// 初回起動
+			if (mFirstFlag == 1)
+			{
 				intent = new Intent(mActivity, GroupActivity.class);
-			} else {
+			}
+			// 初回以降
+			else
+			{
 				intent = new Intent(mActivity, RaderActivity.class);
 			}
 			intent.setAction(Intent.ACTION_VIEW);
