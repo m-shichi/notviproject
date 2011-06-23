@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen
+		name="spin_type_Y">45dp</dimen>
+	<dimen
+		name="spin_pref_Y">105dp</dimen>
+	<dimen
+		name="spin_line_Y">155dp</dimen>
+	<dimen
+		name="spin_stat_Y">205dp</dimen>
+	<dimen
+		name="button_search_01">100dp</dimen>
+	<dimen
+		name="button_search_02">265dp</dimen>
+</resources>
