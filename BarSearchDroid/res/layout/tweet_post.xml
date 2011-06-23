@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<EditText
+		android:id="@+id/edit_text"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textSize="16dip"></EditText>
+	<LinearLayout
+		android:id="@+id/buttonLayout"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dip">
+			<Button
+				android:id="@+id/button_tweet_post"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/button_tweet_post_send"
+				android:drawableLeft="@drawable/ic_menu_send_01"></Button>
+			<Button
+				android:id="@+id/button_cancel"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="@string/button_close"
+				android:drawableLeft="@android:drawable/ic_notification_clear_all"></Button>
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>
