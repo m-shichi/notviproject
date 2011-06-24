@@ -42,8 +42,11 @@ import android.util.Xml;
  * @author m-shichi
  *
  */
-public class HttpUtils {
-	// public static final String HTTP_HOST_NAME = "www.yahoo.co.jp";
+public class HttpUtils
+{
+	// -----------------------------------
+	// サーバ設定
+	// -----------------------------------
 	public static final String HTTP_HOST_NAME = "www.clockworksapple.info";
 	public static final String HTTP_BASE_PATH = "/krs/server/";
 
@@ -52,13 +55,14 @@ public class HttpUtils {
 	 * @param selfInfo
 	 * @return
 	 */
-	public ResponseXML requestUserInfo(int procFlag, SelfInfoBean selfInfo) {
-
+	public ResponseXML requestUserInfo(int procFlag, SelfInfoBean selfInfo)
+	{
 		StringBuilder sb = new StringBuilder(HTTP_BASE_PATH);
 		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
 		ResponseXML responseXML = null;
 
-		switch (procFlag) {
+		switch (procFlag)
+		{
 			case 1 :
 				sb.append("user/new");
 				qparams.add(new BasicNameValuePair("Address", selfInfo.getMailAddr()));
@@ -95,12 +99,13 @@ public class HttpUtils {
 	 * @param selfInfo
 	 * @return
 	 */
-	public ResponseXML requestGroupInfo(int procFlag, SelfInfoBean selfInfo, SelfGroupInfoBean selfGroupInfo) {
-
+	public ResponseXML requestGroupInfo(int procFlag, SelfInfoBean selfInfo, SelfGroupInfoBean selfGroupInfo)
+	{
 		StringBuilder sb = new StringBuilder(HTTP_BASE_PATH);
 		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
 
-		switch (procFlag) {
+		switch (procFlag)
+		{
 			case 1 :
 				sb.append("group/");
 				sb.append(String.valueOf(selfInfo.getId()));
@@ -121,7 +126,6 @@ public class HttpUtils {
 			default :
 				break;
 		}
-
 		return getResponseXml(sb.toString(), qparams);
 	}
 	/**
@@ -131,13 +135,15 @@ public class HttpUtils {
 	 * @param selfLocationInfo
 	 * @return
 	 */
-	public ResponseXML requestLocationInfo(SelfInfoBean selfInfo, SelfGroupInfoBean selfGroupInfo, SelfLocationInfoBean selfLocationInfo) {
-
+	public ResponseXML requestLocationInfo(SelfInfoBean selfInfo, SelfGroupInfoBean selfGroupInfo, SelfLocationInfoBean selfLocationInfo)
+	{
+		// リクエストパス
 		StringBuilder sb = new StringBuilder(HTTP_BASE_PATH);
 		sb.append("location/");
 		sb.append(String.valueOf(selfInfo.getId()));
 		sb.append("/list");
 
+		// リクエストパラメータ
 		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
 		qparams.add(new BasicNameValuePair("GroupId", String.valueOf(selfGroupInfo.getId())));
 		qparams.add(new BasicNameValuePair("Lattitude", String.valueOf(selfLocationInfo.getLattitude())));
@@ -153,22 +159,22 @@ public class HttpUtils {
 	 * @param qparams
 	 * @return
 	 */
-	private ResponseXML getResponseXml(String path, List<NameValuePair> qparams) {
-
+	private ResponseXML getResponseXml(String path, List<NameValuePair> qparams)
+	{
 		HttpClient httpclient = null;
 		InputStream in = null;
 		ResponseXML res = null;
-		try {
+		try
+		{
+			// HTTPクライアント
 			httpclient = new DefaultHttpClient();
-
+			// HTTP設定
 			URI uri = URIUtils.createURI("http", HTTP_HOST_NAME, -1, path, URLEncodedUtils.format(qparams, "UTF-8"), null);
-
-			System.out.println(uri.getScheme() + "://" + uri.getHost() + uri.getPath() + "?" + uri.getQuery());
-
+			// GETメソッド
 			HttpGet httpget = new HttpGet(uri);
-
+			// 通信処理
 			HttpResponse response = httpclient.execute(httpget);
-
+			// レスポンス解析
 			HttpEntity entity = response.getEntity();
 
 			in = entity.getContent();
@@ -176,33 +182,45 @@ public class HttpUtils {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 			StringBuilder buf = new StringBuilder();
 			String str;
-			while ((str = reader.readLine()) != null) {
+			while ((str = reader.readLine()) != null)
+			{
 				buf.append(str);
 				buf.append(System.getProperty("line.separator"));
 			}
 			reader.close();
-
-			System.out.println(buf.toString());
-
-			parseResponse(buf.toString());
-
+			// XML解析
 			res = new ResponseXML(buf.toString());
-
-		} catch (URISyntaxException e) {
+		}
+		catch (URISyntaxException e)
+		{
 			e.printStackTrace();
-		} catch (ClientProtocolException e) {
+		}
+		catch (ClientProtocolException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
-		} catch (SAXException e) {
+		}
+		catch (SAXException e)
+		{
 			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
+		}
+		catch (ParserConfigurationException e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (null != in) {
-				try {
+		}
+		finally
+		{
+			if (null != in)
+			{
+				try
+				{
 					in.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e)
+				{
 				}
 			}
 		}
@@ -216,22 +234,22 @@ public class HttpUtils {
 	 * @param qparams
 	 * @return
 	 */
-	private ResponseXML postResponseXml(String path, List<NameValuePair> qparams) {
-
+	private ResponseXML postResponseXml(String path, List<NameValuePair> qparams)
+	{
 		HttpClient httpclient = null;
 		InputStream in = null;
 		ResponseXML res = null;
-		try {
+		try
+		{
+			// HTTPクライアント
 			httpclient = new DefaultHttpClient();
-
+			// HTTP設定
 			URI uri = URIUtils.createURI("http", HTTP_HOST_NAME, -1, path, URLEncodedUtils.format(qparams, "UTF-8"), null);
-
-			System.out.println(uri.getScheme() + "://" + uri.getHost() + uri.getPath() + "?" + uri.getQuery());
-
+			// POSTメソッド
 			HttpPost httpPost = new HttpPost(uri);
-
+			// 通信処理
 			HttpResponse response = httpclient.execute(httpPost);
-
+			// レスポンス解析
 			HttpEntity entity = response.getEntity();
 
 			in = entity.getContent();
@@ -239,33 +257,45 @@ public class HttpUtils {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 			StringBuilder buf = new StringBuilder();
 			String str;
-			while ((str = reader.readLine()) != null) {
+			while ((str = reader.readLine()) != null)
+			{
 				buf.append(str);
 				buf.append(System.getProperty("line.separator"));
 			}
 			reader.close();
-
-			System.out.println(buf.toString());
-
-			parseResponse(buf.toString());
-
+			// XML解析
 			res = new ResponseXML(buf.toString());
-
-		} catch (URISyntaxException e) {
+		}
+		catch (URISyntaxException e)
+		{
 			e.printStackTrace();
-		} catch (ClientProtocolException e) {
+		}
+		catch (ClientProtocolException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
-		} catch (SAXException e) {
+		}
+		catch (SAXException e)
+		{
 			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
+		}
+		catch (ParserConfigurationException e)
+		{
 			e.printStackTrace();
-		} finally {
-			if (null != in) {
-				try {
+		}
+		finally
+		{
+			if (null != in)
+			{
+				try
+				{
 					in.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e)
+				{
 				}
 			}
 		}
@@ -277,36 +307,51 @@ public class HttpUtils {
 	 * @param xml
 	 * @return
 	 */
-	private ResponseXML parseResponse(String xml) {
-
+	@SuppressWarnings("unused")
+	private ResponseXML parseResponse(String xml)
+	{
 		XmlPullParser parser = Xml.newPullParser();
-		try {
+		try
+		{
 			parser.setInput(new StringReader(xml));
-		} catch (XmlPullParserException ex) {
+		}
+		catch (XmlPullParserException ex)
+		{
 			ex.printStackTrace();
 		}
-
-		try {
+		try
+		{
 			int eventType;
 			eventType = parser.getEventType();
-			while (eventType != XmlPullParser.END_DOCUMENT) {
-				if (eventType == XmlPullParser.START_DOCUMENT) {
+			while (eventType != XmlPullParser.END_DOCUMENT)
+			{
+				if (eventType == XmlPullParser.START_DOCUMENT)
+				{
 					Log.d("XmlPullParserSample", "Start document");
-				} else if (eventType == XmlPullParser.END_DOCUMENT) {
+				}
+				else if (eventType == XmlPullParser.END_DOCUMENT)
+				{
 					Log.d("XmlPullParserSample", "End document");
-				} else if (eventType == XmlPullParser.START_TAG) {
+				}
+				else if (eventType == XmlPullParser.START_TAG)
+				{
 					Log.d("XmlPullParserSample", "Start tag " + parser.getName());
-				} else if (eventType == XmlPullParser.END_TAG) {
+				}
+				else if (eventType == XmlPullParser.END_TAG)
+				{
 					Log.d("XmlPullParserSample", "End tag " + parser.getName());
-				} else if (eventType == XmlPullParser.TEXT) {
+				}
+				else if (eventType == XmlPullParser.TEXT)
+				{
 					Log.d("XmlPullParserSample", "Text " + parser.getText());
 				}
 				eventType = parser.next();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			Log.d("XmlPullParserSample", "Error");
 		}
-
 		return null;
 	}
 }
