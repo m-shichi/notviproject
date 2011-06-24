@@ -15,14 +15,16 @@ import android.os.AsyncTask;
  * @author m-shichi
  *
  */
-public class EditUserTask extends AsyncTask<Void, Integer, ResponseXML> {
+public class EditUserTask extends AsyncTask<Void, Integer, ResponseXML>
+{
 
 	private SelfInfoBean mSelfInfo = null;
 	private Activity mActivity = null;
 	private int mFirstFlag;
 	private ProgressDialog pDialog = null;
 
-	public EditUserTask(SelfInfoBean selfInfo, Activity activity, int firstFlag) {
+	public EditUserTask(SelfInfoBean selfInfo, Activity activity, int firstFlag)
+	{
 		this.mSelfInfo = selfInfo;
 		this.mActivity = activity;
 		this.mFirstFlag = firstFlag;
@@ -30,11 +32,11 @@ public class EditUserTask extends AsyncTask<Void, Integer, ResponseXML> {
 
 	/*
 	 * (非 Javadoc)
-	 *
 	 * @see android.os.AsyncTask#onPreExecute()
 	 */
 	@Override
-	protected void onPreExecute() {
+	protected void onPreExecute()
+	{
 		pDialog = new ProgressDialog(mActivity);
 		pDialog.setMessage(mActivity.getString(R.string.jp_loading));
 		pDialog.setIndeterminate(true);
@@ -43,32 +45,32 @@ public class EditUserTask extends AsyncTask<Void, Integer, ResponseXML> {
 
 	/*
 	 * (非 Javadoc)
-	 *
 	 * @see android.os.AsyncTask#onProgressUpdate(Progress[])
 	 */
 	@Override
-	protected void onProgressUpdate(Integer... values) {
+	protected void onProgressUpdate(Integer... values)
+	{
 		super.onProgressUpdate(values);
 	}
 
 	/*
 	 * (非 Javadoc)
-	 *
 	 * @see android.os.AsyncTask#doInBackground(Params[])
 	 */
 	@Override
-	protected ResponseXML doInBackground(Void... params) {
+	protected ResponseXML doInBackground(Void... params)
+	{
 		HttpUtils httpUtils = new HttpUtils();
 		return httpUtils.requestUserInfo(3, mSelfInfo);
 	}
 
 	/*
 	 * (非 Javadoc)
-	 *
 	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
 	 */
 	@Override
-	protected void onPostExecute(ResponseXML result) {
+	protected void onPostExecute(ResponseXML result)
+	{
 		super.onPostExecute(result);
 	}
 }
