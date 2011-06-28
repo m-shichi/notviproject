@@ -56,7 +56,7 @@ public class TitleActivity extends Activity
 		//-----------------------------------
 		//  ログイン情報取得
 		//-----------------------------------
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String defAccount = prefs.getString(getString(R.string.pref_key_account), "");
 		String defPassword = prefs.getString(getString(R.string.pref_key_password), "");
 
