@@ -7,7 +7,6 @@ import jp.web.sync.android.R;
 import jp.web.sync.android.app.GroupActivity;
 import jp.web.sync.android.app.RaderActivity;
 import jp.web.sync.android.bean.SelfInfoBean;
-import jp.web.sync.android.db.DBHelper;
 import jp.web.sync.android.util.Constant;
 import jp.web.sync.android.util.HttpUtils;
 import jp.web.sync.relax.response.ResponseXML;
