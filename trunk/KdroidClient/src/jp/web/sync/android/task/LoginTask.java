@@ -137,6 +137,7 @@ public class LoginTask extends AsyncTask<Void, Integer, ResponseXML>
 				editor.putString(mActivity.getString(R.string.pref_key_account), userInfo.getMailAddrAsString());
 				editor.putString(mActivity.getString(R.string.pref_key_password), mSelfInfo.getPassword());
 				editor.putString(mActivity.getString(R.string.pref_key_terminal_id), userInfo.getTerminalIdAsString());
+				editor.commit();
 
 				isSuccess = true;
 				break;
@@ -148,14 +149,15 @@ public class LoginTask extends AsyncTask<Void, Integer, ResponseXML>
 				txtMsg = "ユーザ登録成功";
 
 				// SQLite登録
-				DBHelper db = DBHelper.getInstance(mActivity);
-				db.insertSelfInfo(result, mSelfInfo.getPassword());
+				// DBHelper db = DBHelper.getInstance(mActivity);
+				// db.insertSelfInfo(result, mSelfInfo.getPassword());
 
 				// Preference登録
 				editor.putString(mActivity.getString(R.string.pref_key_id), userInfo.getIdAsString()); // ユーザID
 				editor.putString(mActivity.getString(R.string.pref_key_account), userInfo.getMailAddrAsString()); // メールアドレス
 				editor.putString(mActivity.getString(R.string.pref_key_password), mSelfInfo.getPassword()); // 暗号化前パスワード
 				editor.putString(mActivity.getString(R.string.pref_key_terminal_id), userInfo.getTerminalIdAsString()); // 端末ID
+				editor.commit();
 
 				isSuccess = true;
 				break;
