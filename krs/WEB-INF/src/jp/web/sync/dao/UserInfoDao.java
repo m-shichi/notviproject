@@ -43,7 +43,7 @@ public class UserInfoDao extends BaseDao {
 		try {
 			conn = getConnection();
 
-			String sql = "call signin_user(?, ?, ?, ?)";
+			String sql = "call user_signin(?, ?, ?, ?)";
 			cstmt = conn.prepareCall(sql);
 
 			cstmt.setInt(1, id);
