@@ -59,7 +59,6 @@ public class HttpUtils
 	{
 		StringBuilder sb = new StringBuilder(HTTP_BASE_PATH);
 		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
-		ResponseXML responseXML = null;
 
 		switch (procFlag)
 		{
@@ -67,7 +66,6 @@ public class HttpUtils
 				sb.append("user/new");
 				qparams.add(new BasicNameValuePair("Address", selfInfo.getMailAddr()));
 				qparams.add(new BasicNameValuePair("Pass", selfInfo.getHexPassword()));
-				responseXML = getResponseXml(sb.toString(), qparams);
 				break;
 			case 2 :
 				sb.append("user/");
@@ -76,7 +74,6 @@ public class HttpUtils
 				qparams.add(new BasicNameValuePair("Address", selfInfo.getMailAddr()));
 				qparams.add(new BasicNameValuePair("Pass", selfInfo.getHexPassword()));
 				qparams.add(new BasicNameValuePair("TerminalId", selfInfo.getTerminalId()));
-				responseXML = getResponseXml(sb.toString(), qparams);
 				break;
 			case 3 :
 				sb.append("user/");
@@ -86,11 +83,9 @@ public class HttpUtils
 				qparams.add(new BasicNameValuePair("Pass", selfInfo.getHexPassword()));
 				qparams.add(new BasicNameValuePair("Handle", selfInfo.getHandleName()));
 				qparams.add(new BasicNameValuePair("Message", selfInfo.getMessage()));
-				responseXML = postResponseXml(sb.toString(), qparams);
 				break;
 		}
-
-		return responseXML;
+		return getResponseXml(sb.toString(), qparams);
 	}
 
 	/**
