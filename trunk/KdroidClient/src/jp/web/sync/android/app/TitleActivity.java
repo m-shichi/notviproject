@@ -48,14 +48,14 @@ public class TitleActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.title);
 
-		//-----------------------------------
-		//  SQLiteアクセス
-		//-----------------------------------
+		// -----------------------------------
+		// SQLiteアクセス
+		// -----------------------------------
 		final DBHelper dbHelper = DBHelper.getInstance(this);
 
-		//-----------------------------------
-		//  ログイン情報取得
-		//-----------------------------------
+		// -----------------------------------
+		// ログイン情報取得
+		// -----------------------------------
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String defAccount = prefs.getString(getString(R.string.pref_key_account), "");
 		String defPassword = prefs.getString(getString(R.string.pref_key_password), "");
@@ -65,9 +65,9 @@ public class TitleActivity extends Activity
 			firstFlag = 1;
 		}
 
-		//-----------------------------------
-		//  画面部品設定
-		//-----------------------------------
+		// -----------------------------------
+		// 画面部品設定
+		// -----------------------------------
 		final EditText txtMailAddr = (EditText) findViewById(R.id.text_mail_addr); // メールアドレス
 		final EditText txtPassword = (EditText) findViewById(R.id.text_password); // パスワード
 
@@ -113,7 +113,6 @@ public class TitleActivity extends Activity
 		if (!CustomStringUtils.nullValue(defAccount).equals(""))
 		{
 			txtMailAddr.setText(defAccount);
-			mSelfInfo = dbHelper.selectSelfInfoByAddr(defAccount);
 		}
 		if (!CustomStringUtils.nullValue(defPassword).equals(""))
 		{
@@ -123,8 +122,24 @@ public class TitleActivity extends Activity
 		// -----------------------------------
 		// ボタン設定
 		// -----------------------------------
-		Button btnStart = (Button) findViewById(R.id.btn_start);
-		btnStart.setOnClickListener(new OnClickListener()
+		Button btnSignin = (Button) findViewById(R.id.btn_signin);
+		btnSignin.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				String mailAddr = txtMailAddr.getText().toString();
+				String password = txtPassword.getText().toString();
+
+				mSelfInfo = dbHelper.selectSelfInfoByAddr(mailAddr, password);
+
+				LoginTask task = new LoginTask(mActivity, 2, firstFlag, mSelfInfo);
+				task.execute();
+			}
+		});
+
+		Button btnSignup = (Button) findViewById(R.id.btn_signup);
+		btnSignup.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
@@ -149,23 +164,14 @@ public class TitleActivity extends Activity
 					return;
 				}
 
-				int opType;
-				if (null == mSelfInfo)
-				{
-					opType = 1;
-					mSelfInfo = new SelfInfoBean();
-					mSelfInfo.setMailAddr(mailAddr);
-					mSelfInfo.setPassword(password);
-				}
-				else
-				{
-					opType = 2;
-				}
+				mSelfInfo = new SelfInfoBean();
+				mSelfInfo.setMailAddr(mailAddr);
+				mSelfInfo.setPassword(password);
 
 				// -----------------------------------
 				// 非同期処理
 				// -----------------------------------
-				LoginTask task = new LoginTask(mActivity, opType, firstFlag, mSelfInfo);
+				LoginTask task = new LoginTask(mActivity, 1, firstFlag, mSelfInfo);
 				task.execute();
 			}
 		});
