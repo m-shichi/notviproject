@@ -24,6 +24,10 @@
 		name="jp_next">次へ</string>
 	<string
 		name="jp_no_group">表示するグループがありません</string>
+	<string
+		name="jp_signin">サインイン</string>
+	<string
+		name="jp_signup">サインアップ</string>
 	<!-- Preference -->
 	<string
 		name="pref_key_id">ID</string>
