@@ -35,11 +35,18 @@
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical">
+		android:orientation="horizontal">
 		<Button
-			android:id="@+id/btn_start"
+			android:id="@+id/btn_signin"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/jp_start" />
+			android:layout_weight="1"
+			android:text="@string/jp_signin" />
+		<Button
+			android:id="@+id/btn_signup"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/jp_signup" />
 	</LinearLayout>
 </LinearLayout>
