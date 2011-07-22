@@ -84,7 +84,7 @@ public class DBHelper extends SQLiteOpenHelper
 	 *
 	 * @return
 	 */
-	public SelfInfoBean selectSelfInfoByAddr(String mailAddr) throws SQLException
+	public SelfInfoBean selectSelfInfoByAddr(String mailAddr, String password) throws SQLException
 	{
 		SelfInfoBean bean = null;
 		Cursor cur = null;
@@ -93,7 +93,7 @@ public class DBHelper extends SQLiteOpenHelper
 			// read only
 			SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-			cur = db.query("self_info", COLUMN_SELF_INFO, "mail_addr=?", new String[]{mailAddr}, null, null, null);
+			cur = db.query("self_info", COLUMN_SELF_INFO, "mail_addr=? and password=?", new String[]{mailAddr, password}, null, null, null);
 
 			boolean isEof = cur.moveToFirst();
 
@@ -268,7 +268,6 @@ public class DBHelper extends SQLiteOpenHelper
 	 */
 	public boolean deleteSelfInfo(int id) throws SQLException
 	{
-
 		boolean ret = false;
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -287,7 +286,6 @@ public class DBHelper extends SQLiteOpenHelper
 	 */
 	public List<SelfGroupInfoBean> selectSelfGroupInfo(int userId) throws SQLException
 	{
-
 		List<SelfGroupInfoBean> list = new ArrayList<SelfGroupInfoBean>();
 		Cursor cur = null;
 		try
@@ -330,7 +328,6 @@ public class DBHelper extends SQLiteOpenHelper
 	 */
 	public boolean insertSelfGroupInfo(int id, int userId, String groupName) throws SQLException
 	{
-
 		boolean ret = false;
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -356,7 +353,6 @@ public class DBHelper extends SQLiteOpenHelper
 	 */
 	public boolean updateSelfGroupInfo(SelfGroupInfoBean selfGroupInfo, SelfInfoBean selfInfo) throws SQLException
 	{
-
 		boolean ret = false;
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -379,7 +375,6 @@ public class DBHelper extends SQLiteOpenHelper
 	 */
 	public boolean deleteSelfGroupInfo(int id, int userId) throws SQLException
 	{
-
 		boolean ret = false;
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -399,7 +394,6 @@ public class DBHelper extends SQLiteOpenHelper
 	 */
 	public boolean deleteSelfGroupInfoByUserId(int userId)
 	{
-
 		boolean ret = false;
 		try
 		{
