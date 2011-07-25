@@ -20,8 +20,8 @@ import jp.web.sync.util.Constant;
  * @author sync
  *
  */
-public class UserInfoDao extends BaseDao {
-
+public class UserInfoDao extends BaseDao
+{
 	protected static Logger log = Logger.getLogger(UserInfoDao.class);
 
 	/**
@@ -32,15 +32,16 @@ public class UserInfoDao extends BaseDao {
 	 * @param terminalId
 	 * @return
 	 */
-	public ResponseXML userSignin(int id, String mailAddr, String password, String terminalId) {
-
+	public ResponseXML userSignin(int id, String mailAddr, String password, String terminalId)
+	{
 		Connection conn = null;
 		CallableStatement cstmt = null;
 		ResultSet rst = null;
 		ResponseXML resXML = new ResponseXML();
 		UserInfo userInfo = new UserInfo();
 		Data data = new Data();
-		try {
+		try
+		{
 			conn = getConnection();
 
 			String sql = "call user_signin(?, ?, ?, ?)";
@@ -53,9 +54,11 @@ public class UserInfoDao extends BaseDao {
 
 			rst = cstmt.executeQuery();
 
-			while (rst.next()) {
+			while (rst.next())
+			{
 				resXML.setCode(rst.getString("code"));
-				if (rst.getString("code").equals(Constant.CODE_SIGNIN_SUCCESS)) {
+				if (rst.getString("code").equals(Constant.CODE_SIGNIN_SUCCESS))
+				{
 					userInfo.setId(rst.getInt("id"));
 					userInfo.setMailAddr(rst.getString("mail_addr"));
 					userInfo.setHandleName(rst.getString("handle_name"));
@@ -65,9 +68,13 @@ public class UserInfoDao extends BaseDao {
 			data.setUserInfo(userInfo);
 			resXML.setData(data);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+		}
+		catch (SQLException ex)
+		{
+			log.error("SQLエラー", ex);
+		}
+		finally
+		{
 			endProsess(conn, null, cstmt, rst);
 		}
 		return resXML;
@@ -80,15 +87,16 @@ public class UserInfoDao extends BaseDao {
 	 * @param terminalId
 	 * @return
 	 */
-	public ResponseXML userNew(String mailAddr, String password, String terminalId) {
-
+	public ResponseXML userNew(String mailAddr, String password, String terminalId)
+	{
 		Connection conn = null;
 		CallableStatement cstmt = null;
 		ResultSet rst = null;
 		ResponseXML resXML = new ResponseXML();
 		Data data = new Data();
 		UserInfo userInfo = new UserInfo();
-		try {
+		try
+		{
 			String sql = "call user_new(?, ?, ?);";
 
 			conn = getConnection();
@@ -99,9 +107,12 @@ public class UserInfoDao extends BaseDao {
 			cstmt.setString(3, terminalId);
 
 			rst = cstmt.executeQuery();
-			while (rst.next()) {
+			while (rst.next())
+			{
 				resXML.setCodeByString(rst.getString("code"));
-				if (rst.getString("code").equals(Constant.CODE_SIGNUP_SUCCESS)) {
+
+				if (rst.getString("code").equals(Constant.CODE_SIGNUP_SUCCESS))
+				{
 					userInfo.setId(rst.getInt("id"));
 					userInfo.setMailAddrByString(rst.getString("mail_addr"));
 					userInfo.setTerminalIdByString(rst.getString("terminal_id"));
@@ -111,9 +122,13 @@ public class UserInfoDao extends BaseDao {
 			data.setUserInfo(userInfo);
 			resXML.setData(data);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+		}
+		catch (SQLException ex)
+		{
+			log.error("SQLエラー", ex);
+		}
+		finally
+		{
 			endProsess(conn, null, cstmt, rst);
 		}
 		return resXML;
@@ -128,14 +143,15 @@ public class UserInfoDao extends BaseDao {
 	 * @param message
 	 * @return
 	 */
-	public ResponseXML userEdit(int id, String mailAddr, String password, String handleName, String message) {
-
+	public ResponseXML userEdit(int id, String mailAddr, String password, String handleName, String message)
+	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResponseXML resXML = new ResponseXML();
 		Data data = new Data();
 		UserInfo userInfo = new UserInfo();
-		try {
+		try
+		{
 			String sql = "UPDATE kddb.user_info SET mail_addr=?, password=?, handle_name=?, message=? WHERE id=?;";
 
 			conn = getConnection();
@@ -148,18 +164,25 @@ public class UserInfoDao extends BaseDao {
 			pstmt.setInt(5, id);
 
 			int ret = pstmt.executeUpdate();
-			if (ret > 0) {
+			if (ret > 0)
+			{
 				resXML.setCode(Constant.CODE_USER_UPDATE_SUCCESS);
-			} else {
+			}
+			else
+			{
 				resXML.setCode(Constant.CODE_USER_UPDATE_FAILED);
 			}
 
 			data.setUserInfo(userInfo);
 			resXML.setData(data);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+		}
+		catch (SQLException ex)
+		{
+			log.error("SQLエラー", ex);
+		}
+		finally
+		{
 			endProsess(conn, pstmt, null, null);
 		}
 		return resXML;
