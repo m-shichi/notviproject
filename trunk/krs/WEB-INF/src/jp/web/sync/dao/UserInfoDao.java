@@ -42,6 +42,10 @@ public class UserInfoDao extends BaseDao
 		Data data = new Data();
 		try
 		{
+			log.info(String.format("[ID]%d", id));
+			log.info(String.format("[MAIL_ADDRESS]%s", mailAddr));
+			log.info(String.format("[TERMINAL_ID]%s", terminalId));
+
 			conn = getConnection();
 
 			String sql = "call user_signin(?, ?, ?, ?)";
@@ -57,6 +61,7 @@ public class UserInfoDao extends BaseDao
 			while (rst.next())
 			{
 				resXML.setCode(rst.getString("code"));
+
 				if (rst.getString("code").equals(Constant.CODE_SIGNIN_SUCCESS))
 				{
 					userInfo.setId(rst.getInt("id"));
@@ -155,7 +160,7 @@ public class UserInfoDao extends BaseDao
 			String sql = "UPDATE kddb.user_info SET mail_addr=?, password=?, handle_name=?, message=? WHERE id=?;";
 
 			conn = getConnection();
-			pstmt = conn.prepareCall(sql);
+			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, mailAddr);
 			pstmt.setString(2, password);

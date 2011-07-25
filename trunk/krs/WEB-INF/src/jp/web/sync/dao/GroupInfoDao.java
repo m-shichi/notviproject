@@ -20,8 +20,8 @@ import org.apache.log4j.Logger;
  * @author sync
  *
  */
-public class GroupInfoDao extends BaseDao {
-
+public class GroupInfoDao extends BaseDao
+{
 	protected static Logger log = Logger.getLogger(GroupInfoDao.class);
 
 	/**
@@ -30,14 +30,15 @@ public class GroupInfoDao extends BaseDao {
 	 * @param groupName
 	 * @return
 	 */
-	public ResponseXML groupNew(int userId, String groupName) {
-
+	public ResponseXML groupNew(int userId, String groupName)
+	{
 		Connection conn = null;
 		CallableStatement cstmt = null;
 		ResultSet rst = null;
 		ResponseXML resXML = new ResponseXML();
 		Data data = new Data();
-		try {
+		try
+		{
 			String sql = "call group_new(?, ?);";
 
 			conn = getConnection();
@@ -48,7 +49,8 @@ public class GroupInfoDao extends BaseDao {
 
 			rst = cstmt.executeQuery();
 
-			while (rst.next()) {
+			while (rst.next())
+			{
 				resXML.setCode(rst.getString("code"));
 				GroupInfo groupInfo = new GroupInfo();
 				groupInfo.setId(rst.getInt("id"));
@@ -56,9 +58,13 @@ public class GroupInfoDao extends BaseDao {
 				data.addGroupInfo(groupInfo);
 			}
 			resXML.setData(data);
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			log.error("[groupNew]", ex);
-		} finally {
+		}
+		finally
+		{
 			endProsess(conn, null, cstmt, rst);
 		}
 		return resXML;
@@ -70,14 +76,15 @@ public class GroupInfoDao extends BaseDao {
 	 * @param userId
 	 * @return
 	 */
-	public ResponseXML groupEnter(int groupId, int userId) {
-
+	public ResponseXML groupEnter(int groupId, int userId)
+	{
 		Connection conn = null;
 		CallableStatement cstmt = null;
 		ResultSet rst = null;
 		ResponseXML resXML = new ResponseXML();
 		Data data = new Data();
-		try {
+		try
+		{
 			String sql = "call group_enter(?, ?);";
 
 			conn = getConnection();
@@ -88,9 +95,11 @@ public class GroupInfoDao extends BaseDao {
 
 			rst = cstmt.executeQuery();
 
-			while (rst.next()) {
+			while (rst.next())
+			{
 				resXML.setCode(rst.getString("code"));
-				if (rst.getString("code").equals(Constant.CODE_GROUP_ADD_SUCCESS)) {
+				if (rst.getString("code").equals(Constant.CODE_GROUP_ADD_SUCCESS))
+				{
 					GroupInfo groupInfo = new GroupInfo();
 					groupInfo.setId(rst.getInt("id"));
 					groupInfo.setGroupNameByString(rst.getString("group_name"));
@@ -98,9 +107,13 @@ public class GroupInfoDao extends BaseDao {
 				}
 			}
 			resXML.setData(data);
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			log.error("[groupEnter]", ex);
-		} finally {
+		}
+		finally
+		{
 			endProsess(conn, null, cstmt, rst);
 		}
 		return resXML;
@@ -111,14 +124,15 @@ public class GroupInfoDao extends BaseDao {
 	 * @param userId
 	 * @return
 	 */
-	public ResponseXML getGroupList(int userId) {
-
+	public ResponseXML getGroupList(int userId)
+	{
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rst = null;
 		ResponseXML resXML = new ResponseXML();
 		Data data = new Data();
-		try {
+		try
+		{
 			String sql = "SELECT a.group_id as id, b.group_name FROM KDDB.group_info_list a, KDDB.group_info b WHERE a.group_id=b.id AND a.user_id=?";
 
 			conn = getConnection();
@@ -128,7 +142,8 @@ public class GroupInfoDao extends BaseDao {
 
 			rst = psmt.executeQuery();
 
-			while (rst.next()) {
+			while (rst.next())
+			{
 				GroupInfo groupInfo = new GroupInfo();
 				groupInfo.setId(rst.getInt("id"));
 				groupInfo.setGroupName(rst.getString("group_name"));
@@ -136,9 +151,13 @@ public class GroupInfoDao extends BaseDao {
 			}
 			resXML.setData(data);
 
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			log.error("[getGroupList]", ex);
-		} finally {
+		}
+		finally
+		{
 			endProsess(conn, psmt, null, rst);
 		}
 		return resXML;
