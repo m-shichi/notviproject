@@ -18,13 +18,13 @@ import jp.web.sync.relax.response.ResponseXML;
  *
  */
 @Path("group")
-public class GroupInfoResource {
-
+public class GroupInfoResource
+{
 	@GET
 	@Produces(MediaType.TEXT_XML)
 	@Path("{id}/new")
-	public String doGroupNew(@PathParam("id") int userId, @QueryParam("GroupName") String groupName) {
-
+	public String doGroupNew(@PathParam("id") int userId, @QueryParam("GroupName") String groupName)
+	{
 		GroupInfoDao groupDao = new GroupInfoDao();
 
 		ResponseXML responseXML = groupDao.groupNew(userId, groupName);
@@ -35,8 +35,8 @@ public class GroupInfoResource {
 	@GET
 	@Produces(MediaType.TEXT_XML)
 	@Path("{id}/enter")
-	public String doGroupEnter(@PathParam("id") int id, @QueryParam("GroupId") int groupId) {
-
+	public String doGroupEnter(@PathParam("id") int id, @QueryParam("GroupId") int groupId)
+	{
 		// DAO
 		GroupInfoDao groupDao = new GroupInfoDao();
 
@@ -48,8 +48,8 @@ public class GroupInfoResource {
 	@GET
 	@Produces(MediaType.TEXT_XML)
 	@Path("{id}/list")
-	public String doGetGroupList(@PathParam("id") int id) {
-
+	public String doGetGroupList(@PathParam("id") int id)
+	{
 		// DAO
 		GroupInfoDao groupDao = new GroupInfoDao();
 
