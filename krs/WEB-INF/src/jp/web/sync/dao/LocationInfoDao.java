@@ -22,8 +22,8 @@ import jp.web.sync.util.Constant;
  * @author sync
  *
  */
-public class LocationInfoDao extends BaseDao {
-
+public class LocationInfoDao extends BaseDao
+{
 	protected static Logger log = Logger.getLogger(LocationInfoDao.class);
 
 	/**
@@ -33,13 +33,14 @@ public class LocationInfoDao extends BaseDao {
 	 * @param longitude
 	 * @return
 	 */
-	public int addLocationInfo(int id, double lattitude, double longitude) {
-
+	public int addLocationInfo(int id, double lattitude, double longitude)
+	{
 		int ret = 0;
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		try {
-			String sql = "insert into KDDB.location_info (user_id, latitude, longitude) values(?, ?, ?)";
+		try
+		{
+			String sql = "insert into kddb.location_info (user_id, latitude, longitude) values(?, ?, ?)";
 
 			conn = getConnection();
 			psmt = conn.prepareStatement(sql);
@@ -50,15 +51,22 @@ public class LocationInfoDao extends BaseDao {
 
 			ret = psmt.executeUpdate();
 
-			if (ret == 1) {
+			if (ret == 1)
+			{
 				conn.commit();
-			} else {
+			}
+			else
+			{
 				conn.rollback();
 			}
 
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			log.error("[addLocationInfo]", ex);
-		} finally {
+		}
+		finally
+		{
 			endProsess(conn, psmt, null, null);
 		}
 		return ret;
@@ -70,15 +78,16 @@ public class LocationInfoDao extends BaseDao {
 	 * @param userId
 	 * @return
 	 */
-	public ResponseXML getLocationInfo(int userId, int groupId, double lattitude, double longitude) {
-
+	public ResponseXML getLocationInfo(int userId, int groupId, double lattitude, double longitude)
+	{
 		Connection conn = null;
 		CallableStatement csmt = null;
 		ResultSet rst = null;
 		ResponseXML resXML = new ResponseXML();
 		Data data = new Data();
 		List<LocationInfo> list = new ArrayList<LocationInfo>();
-		try {
+		try
+		{
 			String sql = "call location_get(?, ?, ?, ?);";
 
 			conn = getConnection();
@@ -91,9 +100,11 @@ public class LocationInfoDao extends BaseDao {
 
 			rst = csmt.executeQuery();
 
-			while (rst.next()) {
+			while (rst.next())
+			{
 				resXML.setCode(rst.getString("code"));
-				if (rst.getString("code").equals(Constant.CODE_LOCATION_LIST_SUCCESS)) {
+				if (rst.getString("code").equals(Constant.CODE_LOCATION_LIST_SUCCESS))
+				{
 					LocationInfo locationInfo = new LocationInfo();
 					locationInfo.setCreateDateAndTime(rst.getTimestamp("createdateandtime").getTime());
 					locationInfo.setUserName(rst.getString("user_name"));
@@ -105,9 +116,13 @@ public class LocationInfoDao extends BaseDao {
 			data.setLocationInfo(list.toArray(new LocationInfo[0]));
 			resXML.setData(data);
 
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			log.error("[getLocationInfo]", ex);
-		} finally {
+		}
+		finally
+		{
 			endProsess(conn, null, csmt, rst);
 		}
 		return resXML;

@@ -17,22 +17,28 @@ import javax.sql.DataSource;
  * @author sync
  *
  */
-public abstract class BaseDao {
-
+public abstract class BaseDao
+{
 	/**
 	 *
 	 * @return
 	 */
-	protected Connection getConnection() {
+	protected Connection getConnection()
+	{
 		Connection con = null;
-		try {
+		try
+		{
 			InitialContext initCon = new InitialContext();
 			DataSource ds = (DataSource) initCon.lookup("java:comp/env/jdbc/MySQL");
 			con = ds.getConnection();
 			con.setAutoCommit(false);
-		} catch (NamingException e) {
+		}
+		catch (NamingException e)
+		{
 			e.printStackTrace();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e)
+		{
 			e.printStackTrace();
 		}
 		return con;
@@ -44,36 +50,51 @@ public abstract class BaseDao {
 	 * @param psmt
 	 * @param rst
 	 */
-	protected void endProsess(Connection conn, PreparedStatement psmt, CallableStatement csmt, ResultSet rst) {
-
-		if (null != rst) {
-			try {
+	protected void endProsess(Connection conn, PreparedStatement psmt, CallableStatement csmt, ResultSet rst)
+	{
+		if (null != rst)
+		{
+			try
+			{
 				rst.close();
-			} catch (SQLException e) {
+			}
+			catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 		}
-		if (null != psmt) {
-			try {
+		if (null != psmt)
+		{
+			try
+			{
 				psmt.close();
-			} catch (SQLException e) {
+			}
+			catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 		}
-		if (null != csmt) {
-			try {
+		if (null != csmt)
+		{
+			try
+			{
 				csmt.close();
-			} catch (SQLException e) {
+			}
+			catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 		}
-		if (null != conn) {
-			try {
+		if (null != conn)
+		{
+			try
+			{
 				conn.close();
-			} catch (SQLException e) {
+			}
+			catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 		}
 	}
-
 }
