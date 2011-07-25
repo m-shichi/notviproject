@@ -22,21 +22,22 @@ import org.apache.log4j.Logger;
  *
  */
 @Path("user")
-public class UserInfoResource {
-
+public class UserInfoResource
+{
 	protected static Logger log = Logger.getLogger(UserInfoResource.class);
 
 	@GET
 	@Produces(MediaType.TEXT_XML)
 	@Path("/new")
-	public String doSignUp(@QueryParam("Address") String mailAddr, @QueryParam("Pass") String password) {
-
+	public String doSignUp(@QueryParam("Address") String mailAddr, @QueryParam("Pass") String password)
+	{
 		log.info(String.format("[MAIL]%s", mailAddr));
 		log.info(String.format("[PASS]%s", password));
 
 		String terminalId = null;
 		ResponseXML resXML = null;
-		try {
+		try
+		{
 			// DAO
 			UserInfoDao uDao = new UserInfoDao();
 			// ユーザ情報追加
@@ -44,7 +45,9 @@ public class UserInfoResource {
 
 			resXML = uDao.userNew(mailAddr, password, terminalId);
 
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 			log.error("[ユーザー登録]", ex);
 		}
 		return resXML.makeTextDocument();
@@ -52,13 +55,14 @@ public class UserInfoResource {
 	@GET
 	@Produces(MediaType.TEXT_XML)
 	@Path("{id}/signin")
-	public String doSignin(@PathParam("id") int id, @QueryParam("Address") String mailAddr, @QueryParam("Pass") String password, @QueryParam("TerminalId") String terminalId) {
-
+	public String doSignin(@PathParam("id") int id, @QueryParam("Address") String mailAddr, @QueryParam("Pass") String password, @QueryParam("TerminalId") String terminalId)
+	{
 		ResponseXML resXML = null;
 		// DAO
 		UserInfoDao uDao = new UserInfoDao();
 		// ユーザ情報取得
-		if (null != terminalId) {
+		if (null != terminalId)
+		{
 			resXML = uDao.userSignin(id, mailAddr, password, terminalId);
 		}
 		return resXML.makeTextDocument();
@@ -68,8 +72,8 @@ public class UserInfoResource {
 	@Produces(MediaType.TEXT_XML)
 	@Path("{id}/edit")
 	public String doEditUser(@PathParam("id") int id, @QueryParam("Address") String mailAddr, @QueryParam("Pass") String password, @QueryParam("Handle") String handleName,
-			@QueryParam("Message") String message) {
-
+			@QueryParam("Message") String message)
+	{
 		ResponseXML resXML = null;
 		// DAO
 		UserInfoDao uDao = new UserInfoDao();

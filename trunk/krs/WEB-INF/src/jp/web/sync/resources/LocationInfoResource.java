@@ -21,15 +21,15 @@ import jp.web.sync.relax.response.ResponseXML;
  */
 
 @Path("/location")
-public class LocationInfoResource {
-
+public class LocationInfoResource
+{
 	protected static Logger log = Logger.getLogger(LocationInfoResource.class);
 
 	@GET
 	@Produces(MediaType.TEXT_XML)
 	@Path("{id}/list")
-	public String getGroupLocation(@PathParam("id") int id, @QueryParam("GroupId") int groupId, @QueryParam("Lattitude") String lattitude, @QueryParam("Longitude") String longitude) {
-
+	public String getGroupLocation(@PathParam("id") int id, @QueryParam("GroupId") int groupId, @QueryParam("Lattitude") String lattitude, @QueryParam("Longitude") String longitude)
+	{
 		log.info(String.format("[id]%s", String.valueOf(id)));
 		log.info(String.format("[GroupId]%s", String.valueOf(groupId)));
 		log.info(String.format("[Lattitude]%s", lattitude));
