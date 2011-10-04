@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array
+		name="preference_page_sending_entries">
+		<item>右</item>
+		<item>左</item>
+	</string-array>
+	<string-array
+		name="preference_page_sending_values">
+		<item>15</item>
+		<item>13</item>
+	</string-array>
+	<string-array
+		name="preference_background_and_char_color_entries">
+		<item>黒地 ＋ 白字</item>
+		<item>白地 ＋ 黒字</item>
+	</string-array>
+	<string-array
+		name="preference_background_and_char_color_values">
+		<item>0</item>
+		<item>1</item>
+	</string-array>
+</resources>

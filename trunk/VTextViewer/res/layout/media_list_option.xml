@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+>
+	<item
+		android:id="@+id/download"
+		android:title="@string/option_download"
+		android:visible="true"
+		android:enabled="true"
+		android:icon="@android:drawable/ic_menu_save" />
+	<item
+		android:id="@+id/setting"
+		android:title="@string/option_settings"
+		android:visible="true"
+		android:enabled="true"
+		android:icon="@android:drawable/ic_menu_preferences" />
+	<item
+		android:id="@+id/quit"
+		android:title="@string/option_quit"
+		android:visible="true"
+		android:enabled="true"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel" />
+</menu>

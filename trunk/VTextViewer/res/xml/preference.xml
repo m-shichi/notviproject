@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory
+		android:title="@string/title_preference">
+		<ListPreference
+			android:key="@string/preference_font_size"
+			android:summary=""
+			android:title="@string/title_preferece_font_size"
+			android:dialogTitle="@string/dialog_title_preference_font_size" />
+		<ListPreference
+			android:key="@string/preference_block_num"
+			android:summary=""
+			android:title="@string/title_preference_block_num"
+			android:dialogTitle="@string/dialog_title_preference_block_num" />
+		<!-- ListPreference android:key="@string/preference_page_sending" android:summary=""
+			android:title="@string/title_preference_page_sending" android:dialogTitle="@string/dialog_title_preference_page_sending"
+			android:entries="@array/preference_page_sending_entries" android:entryValues="@array/preference_page_sending_values"
+			/ -->
+		<ListPreference
+			android:key="@string/preference_back_and_char_color"
+			android:summary=""
+			android:title="@string/title_preference_back_and_char_color"
+			android:dialogTitle="@string/dialog_title_preference_back_and_char_color" />
+		<jp.nextep.android.vtextviewer.dialog.VersionDialog
+			android:key="@string/preference_version_dialog"
+			android:title="@string/title_preference_version_dialog"
+			android:summary="" />
+	</PreferenceCategory>
+</PreferenceScreen>
