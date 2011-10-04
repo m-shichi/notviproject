@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@+id/bookmark_new"
+		android:title="@string/option_bookmark_new"
+		android:visible="true"
+		android:enabled="true"
+		android:icon="@android:drawable/ic_menu_add" />
+	<item
+		android:id="@+id/bookmark_manager"
+		android:title="@string/option_bookmark_manager"
+		android:visible="true"
+		android:enabled="true"
+		android:icon="@drawable/ic_menu_compose" />
+</menu>

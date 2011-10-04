@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="6px">
+	<LinearLayout
+		android:id="@+id/imageBox"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="5"
+		android:scrollbarStyle="outsideInset"
+		android:padding="5dip">
+		<ImageView
+			android:id="@+id/selectedImageView"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:adjustViewBounds="true"
+			android:scaleType="fitCenter">
+		</ImageView>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5dip">
+		<Gallery
+			android:id="@+id/imageGallery"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" />
+	</LinearLayout>
+	<Button
+		android:id="@+id/btn_close_article_image"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/button_close" />
+</LinearLayout>
